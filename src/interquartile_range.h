@@ -14,6 +14,10 @@
         3.00 
 */
 
+/*
+  I worked with William OFlaherty
+*/
+
 #include <iostream>
 #include <iomanip>
 
@@ -42,5 +46,50 @@ Node* insertEnd(Node* head, int key)
 float interQuartile(Node* head)
 {
     //code here
-    return 0.0;   
+    Node* p4 = head->next->next->next;
+    Node* p3 = head->next->next;
+    Node* p2 = head->next;
+    Node* p1 = head;
+    float Q1, Q3;
+    // int count = 1;
+    while(true) {
+      p4 = p4->next;
+      if(p4) {
+        p4 = p4->next;
+        p3 = p3->next;
+        if(p4) {
+          p4 = p4->next;
+          p3 = p3->next;
+          p2 = p2->next;
+          if(p4) {
+            p4 = p4->next;
+            p3 = p3->next;
+            p2 = p2->next;
+            p1 = p1->next;
+            if(!p4) { // base 7
+              Q1 = p1->value;
+              Q3 = p3->value;
+              break;
+            }
+          }
+          else {
+            Q1 = p1->next->value;
+            Q3 = p3->value;
+            break;
+          }
+        }
+        else { // base 5
+          Q1 = (p1->value / 2.0 + p1->next->value / 2.0);
+          Q3 = (p3->value / 2.0 + p3->next->value / 2.0);
+          break;
+        }
+      }
+      else { // base 4
+        Q1 = (p1->value / 2.0 + p1->next->value / 2.0);
+        Q3 = (p3->value / 2.0 + p3->next->value / 2.0);
+        break;
+      }
+    }
+    
+    return Q3 - Q1;
 }
